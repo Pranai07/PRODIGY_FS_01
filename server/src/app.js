@@ -23,7 +23,10 @@ app.use(cookieParser());
 // Allow frontend requests
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://secureauth-alpha.vercel.app",
+    ],
     credentials: true,
   })
 );
