@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FiUser,
-  FiMail,
-  FiShield,
   FiCheckCircle,
   FiLogOut,
 } from "react-icons/fi";
 import toast from "react-hot-toast";
 
-import { getProfile } from "../services/authService";
-import axios from "axios";
+import { getProfile, logoutUser } from "../services/authService";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -31,17 +28,12 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(
-        "http://localhost:5000/api/auth/logout",
-        {},
-        {
-          withCredentials: true,
-        }
-      );
+      await logoutUser();
 
       toast.success("Logged out successfully");
       navigate("/login");
     } catch (error) {
+      console.error(error);
       toast.error("Logout failed");
     }
   };
@@ -56,13 +48,9 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-slate-100">
-
       {/* Navbar */}
       <div className="bg-indigo-600 text-white px-8 py-5 flex justify-between items-center shadow-lg">
-
-        <h1 className="text-2xl font-bold">
-          🔒 SecureAuth
-        </h1>
+        <h1 className="text-2xl font-bold">🔒 SecureAuth</h1>
 
         <button
           onClick={handleLogout}
@@ -71,13 +59,10 @@ const Dashboard = () => {
           <FiLogOut />
           Logout
         </button>
-
       </div>
 
       {/* Content */}
-
       <div className="max-w-5xl mx-auto py-12 px-5">
-
         <h2 className="text-4xl font-bold text-slate-800">
           Welcome 👋
         </h2>
@@ -87,29 +72,35 @@ const Dashboard = () => {
         </p>
 
         <div className="grid md:grid-cols-2 gap-6">
-
+          {/* User Card */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
-
             <div className="flex items-center gap-3 mb-4">
-
               <FiUser className="text-indigo-600 text-2xl" />
 
               <h3 className="font-semibold text-xl">
                 User Information
               </h3>
-
             </div>
 
             <p className="mb-2">
-              <strong>Email:</strong>
+              <strong>Full Name:</strong>
             </p>
 
             <p className="text-gray-600">
-              {user.email}
+              {user.fullName}
             </p>
 
             <div className="mt-5">
+              <p className="mb-2">
+                <strong>Email:</strong>
+              </p>
 
+              <p className="text-gray-600">
+                {user.email}
+              </p>
+            </div>
+
+            <div className="mt-5">
               <p className="mb-2">
                 <strong>Role:</strong>
               </p>
@@ -117,25 +108,20 @@ const Dashboard = () => {
               <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm">
                 {user.role}
               </span>
-
             </div>
-
           </div>
 
+          {/* Authentication Status */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
-
             <div className="flex items-center gap-3 mb-4">
-
               <FiCheckCircle className="text-green-600 text-2xl" />
 
               <h3 className="font-semibold text-xl">
                 Authentication Status
               </h3>
-
             </div>
 
             <div className="bg-green-100 rounded-xl p-4">
-
               <p className="text-green-700 font-semibold">
                 ✅ Successfully Authenticated
               </p>
@@ -143,15 +129,10 @@ const Dashboard = () => {
               <p className="text-gray-600 mt-2">
                 Your session is active and protected using JWT Authentication.
               </p>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };
