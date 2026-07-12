@@ -6,6 +6,15 @@ SecureAuth is a full-stack authentication system built using React, Node.js, Exp
 
 ---
 
+🚀 Live Demo
+Frontend (Vercel)
+https://secureauth-alpha.vercel.app/
+
+Backend (Render)
+https://secureauth-api-ymgl.onrender.com
+
+---
+
 ## 🚀 Features
 
 - User Registration
