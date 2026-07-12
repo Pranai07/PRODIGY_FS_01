@@ -26,6 +26,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://secureauth-alpha.vercel.app",
+      "https://secureauth-egvabb7ew-pranai07s-projects.vercel.app",
     ],
     credentials: true,
   })
